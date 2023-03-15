@@ -7,9 +7,16 @@ using System.Threading.Tasks;
 namespace PZ8;
 public class Student {
     public string FIO { get; private set; }
+    public Student(string fio = "") {
+        FIO = fio;
+    }
+
+    public void PassSession(Session session) {
+        session.Pass();
+    }
 }
 
-class Session {
+public class Session {
     public ISessionType SessionType { get; private set; }
 
     public string Subject { get; set; }
@@ -17,16 +24,20 @@ class Session {
     public void ChangeSessionType(ISessionType sessionType) {
         SessionType = sessionType;
     }
+
+    public void Pass() {
+        SessionType.Pass();
+    }
 }
 
-interface ISessionType {
+public interface ISessionType {
     public void Pass();
 }
 
 /// <summary>
 /// Зачет
 /// </summary>
-class Report : ISessionType {
+public class Report : ISessionType {
     public void Pass() {
         Console.WriteLine("Зачет");
     }
@@ -35,7 +46,7 @@ class Report : ISessionType {
 /// <summary>
 /// Диф зачет
 /// </summary>
-class DiffReport : ISessionType {
+public class DiffReport : ISessionType {
     public void Pass() {
         Console.WriteLine("Диф зачет");
     }
@@ -44,7 +55,7 @@ class DiffReport : ISessionType {
 /// <summary>
 /// Экзамен
 /// </summary>
-class Exam : ISessionType {
+public class Exam : ISessionType {
     public void Pass() {
         Console.WriteLine("Экзамен");
     }
